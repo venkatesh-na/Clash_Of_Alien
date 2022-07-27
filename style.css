@@ -31,9 +31,83 @@ body > div > div{
    width:30px;
    height: 30px;
     box-shadow: 0px 0px 0.3px 0.3px grey;
+ 
 }
-.box.player{
+.box.player1{
     background-color: rgb(151, 253, 151);
     box-shadow: 0px 0px 1px 1px grey;
     border-radius: 50%;
+    position: relative;
+}
+.box.player2 {
+    background-color: rgb(194, 135, 99);
+    box-shadow: 0px 0px 1px 1px grey;
+    border-radius: 50%;
+    position: relative;
+}
+
+.box.player1 .lifeBar1{
+    width:50px;
+    height: 5px;
+    box-shadow: 0px 0px 1px 1px grey;
+    position: absolute;
+    top:-18px;
+    left:-10px;
+}
+.box.player2 .lifeBar2{
+    width: 50px;
+        height: 5px;
+        box-shadow: 0px 0px 1px 1px grey;
+        position: absolute;
+        top: -18px;
+        left: -10px;
+}
+
+.box.player1 .lifeBar1 div{
+    height: 100%;
+    background-color: red;
+}
+.box.player2 .lifeBar2 div{
+    height: 100%;
+        background-color: rgb(53, 173, 55);
+}
+
+.box.player1 .arrow{
+    width: 0;
+    height: 0;
+    border: solid 8px;
+    border-color: transparent transparent black transparent;
+    position: absolute;
+    top:-18px;
+    left:7px;
+}
+.box.player2 .arrow2 {
+    width: 0;
+    height: 0;
+    border: solid 8px;
+    border-color: transparent transparent black transparent;
+    position: absolute;
+    top: -18px;
+    left: 7px;
+}
+.box.bullet{
+    background-color: rgb(255, 245, 52);
+    width:40%;
+    height:40%;
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 1px grey;
+    justify-self: center;
+    align-self: center;
+}
+.box.box.bullet2{
+    background-color: rgb(97, 253, 253);
+    width: 40%;
+    height: 40%;
+    border-radius: 50%;
+    box-shadow: 0px 0px 1px 1px grey;
+    justify-self: center;
+    align-self: center;
+}
+.box.mituor{
+    background-color: rgb(255, 164, 164);
 }
