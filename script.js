@@ -1,28 +1,30 @@
 const allBox = document.querySelectorAll(".box");
 const board = document.querySelector("body > div > div")
 const outsideBoard = document.querySelector("body > div")
+
+//initialy player life 100
 let player1Life = 100;
 let player2Life = 100;
-let isPlayerDead = false;
 
-//allBox[60] is a a player in center of the board
-allBox[0].classList.add("player1")
-allBox[0].innerHTML = `<div class = "lifeBar1">
+//allBox[60] is a a player1 
+allBox[120].classList.add("player1")
+allBox[120].innerHTML = `<div class = "lifeBar1">
 <div></div>
 </div>
 <div class = "arrow"></div>
 `
-
-allBox[120].classList.add("player2")
-allBox[120].innerHTML = `<div class = "lifeBar2">
+//allBox[60] is a a player2 
+allBox[0].classList.add("player2")
+allBox[0].innerHTML = `<div class = "lifeBar2">
 <div></div>
 </div>
 <div class = "arrow2"></div>`
 
+
 const arrow = document.querySelector(".box.player1 .arrow")
 const lifeBar1 = document.querySelector(".box.player1 .lifeBar1 div")
 const lifeBar2 = document.querySelector(".box.player1 .lifeBar1 div")
-
+//setting player1 and player2 life to 100%
 lifeBar1.style.width = `${player1Life}%`
 lifeBar2.style.width = `${player2Life}%`
 
@@ -36,8 +38,10 @@ setInterval(()=>{
             e.classList.remove("mituor")
         }
     })
-    let randNum = Math.floor(Math.random() * 120) //120 becuase there are total 120 boxes
-    allBox[randNum].classList.add("mituor");
+    for(let i = 0; i<2; i++){
+        let randNum = Math.floor(Math.random() * 120) //120 becuase there are total 120 boxes
+        allBox[randNum].classList.add("mituor");
+    }
 },5000)
 
 
@@ -47,28 +51,28 @@ allBox.forEach((e,i)=>{
   // e.textContent = i;
 })
 
-//ui for player life level
+//ui for player1 life level
 function player1LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar1">
     <div></div>
     </div>
     <div class = "arrow"></div>`
-    //adding current life level - if we dont write 43 line the life of player show 100% in ui
     allBox[index].querySelector(".lifeBar1 div").style.width = `${player1Life}%`;
 }
 
+//ui for player2 life level
 function player2LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar2">
     <div></div>
     </div>
     <div class = "arrow2"></div>`
-    //adding current life level - if we dont write 43 line the life of player show 100% in ui
     allBox[index].querySelector(".lifeBar2 div").style.width = `${player2Life}%`;
 }
 
 
 
 setInterval(()=>{
+    //for reducing life of player1 when player is in mutour range
     allBox.forEach(e=>{
         if(e.classList.contains("player1") &&
         e.classList.contains("box") &&
@@ -77,12 +81,12 @@ setInterval(()=>{
             player1Life -= 10;
             e.querySelector(".lifeBar1 div").style.width = `${player1Life}%`
             if(player1Life <= 0){
-            isPlayerDead = true;
             outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player dead</h1>`
             return;
             }
         }
 
+        //for reducing life of player2 when player is in mutour range
         if(e.classList.contains("player2") &&
         e.classList.contains("box") &&
         e.classList.contains("mituor")
@@ -90,15 +94,16 @@ setInterval(()=>{
             player2Life -= 10;
             e.querySelector(".lifeBar2 div").style.width = `${player2Life}%`
             if(player2Life <= 0){
-            isPlayerDead = true;
             outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player dead</h1>`
             return;
             }
         }
     })
 },500)
+//if i reduce the time interval time than it will detect the player and immediately reduce the life
+//if i increase the time interval time than player gets time to move from the mutour range
 
-//return the player position in index
+//return the player position in board
 function returnIndex(player){   
     let id = null;
     if(player == "player1"){
@@ -123,8 +128,7 @@ function checkPlayer2BulletCollision(playerId, interval){
         player2Life -= 10;
         document.querySelector(".box.player2 .lifeBar2 div").style.width = `${player2Life}%`
         if(player2Life <= 0){
-            isPlayerDead = true;
-            outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player2 dead , player1 win </h1>`
+            outsideBoard.innerHTML = `<h1 style="color : rgb(151, 253, 151)">Brown Player dead , Green player win </h1>`
             return clearInterval(interval);
         }
         return clearInterval(interval) //so that bullet does not pass through player
@@ -137,8 +141,7 @@ function checkPlayer1BulletCollision(playerId, interval){
         player1Life -= 10;
         document.querySelector(".box.player1 .lifeBar1 div").style.width = `${player1Life}%`
         if(player1Life <= 0){
-            isPlayerDead = true;
-            outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player1 dead and player2 win</h1>`
+            outsideBoard.innerHTML = `<h1 style="color : rgb(194, 135, 99)">Green Player dead and brown player win</h1>`
             return clearInterval(interval);
         }
         return clearInterval(interval) //so that bullet does not pass through player
@@ -161,19 +164,19 @@ function checkPlayer1BulletCollision(playerId, interval){
 //     board.style.transform = whichTranslateFun(translateValue) 
 // }
 
-let translateXValue = 0;
+
+let translateXValue = 0; //for camera movement in x direction
 let translateYValue = 0;
-let arrowDirectionPlayer1 = "";
+let arrowDirectionPlayer1 = ""; //help in shooting a bullet in certain direction
 let arrowDirectionPlayer2 = ""
 document.addEventListener("keydown",(e)=>{
-    console.log(e.key)
     let index;
     switch(e.key){
         case "ArrowUp":
-            index = parseInt(returnIndex("player1"));
-        if(index - 11 >= 0){
+            index = parseInt(returnIndex("player1")); //returns position of player1
+        if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
             arrowDirectionPlayer1 = "up"
-            allBox[index].classList.remove("player1");
+            allBox[index].classList.remove("player1"); 
             allBox[index - 11].classList.add("player1");
             player1LifeLevel(index-11);
             translateYValue += 10;
@@ -183,7 +186,7 @@ document.addEventListener("keydown",(e)=>{
         break;
         case "ArrowDown":
         index = parseInt(returnIndex("player1"));
-        if(index + 11 <= 120){
+        if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
             arrowDirectionPlayer1 = "down"
             allBox[index].classList.remove("player1");
             allBox[index + 11].classList.add("player1");
@@ -196,7 +199,7 @@ document.addEventListener("keydown",(e)=>{
         break;
         case "ArrowRight":
         index = parseInt(returnIndex("player1"));
-        if((index + 1) % 11 != 0){
+        if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
             arrowDirectionPlayer1 = "right"
             allBox[index].classList.remove("player1");
             allBox[index + 1].classList.add("player1");    
@@ -209,7 +212,7 @@ document.addEventListener("keydown",(e)=>{
         case "ArrowLeft":
         arrowDirectionPlayer1 = "left"
         index = parseInt(returnIndex("player1"));
-        if(index % 11 != 0){
+        if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
             allBox[index].classList.remove("player1");
             allBox[index - 1].classList.add("player1");
             player1LifeLevel(index-1);
@@ -235,7 +238,7 @@ document.addEventListener("keydown",(e)=>{
         break;
         case "s":
         index = parseInt(returnIndex("player2"));
-        if(index + 11 <= 120){
+        if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
             arrowDirectionPlayer2 = "down"
             allBox[index].classList.remove("player2");
             allBox[index + 11].classList.add("player2");
@@ -248,7 +251,7 @@ document.addEventListener("keydown",(e)=>{
         break;
         case "d":
         index = parseInt(returnIndex("player2"));
-        if((index + 1) % 11 != 0){
+        if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
             arrowDirectionPlayer2 = "right"
             allBox[index].classList.remove("player2");
             allBox[index + 1].classList.add("player2");    
@@ -261,7 +264,7 @@ document.addEventListener("keydown",(e)=>{
         case "a":
         arrowDirectionPlayer2 = "left"
         index = parseInt(returnIndex("player2"));
-        if(index % 11 != 0){
+        if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
             allBox[index].classList.remove("player2");
             allBox[index - 1].classList.add("player2");
             player2LifeLevel(index-1);
@@ -279,7 +282,7 @@ document.addEventListener("keydown",(e)=>{
 function bulletControll(direction){
     let player = document.querySelector(".box.player1")
     let playerId;
-    let i;
+    let i; 
     let interval;
     switch(direction){
         case "up":
@@ -287,7 +290,7 @@ function bulletControll(direction){
             playerId = parseInt(player.id)
             i = 0;
             interval = setInterval(()=>{
-                if(i != 0){
+                if(i != 0){ //may be by removing this line it will work
                     //we dont want to create bullet on every down box
                     //so clearing bullet class of previous box
                     //we dont want to removed bullet class on first iteration
