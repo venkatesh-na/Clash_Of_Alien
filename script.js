@@ -23,6 +23,7 @@ allBox[120].innerHTML = `<div class = "lifeBar1">
 
 
 //allBox[60] is a a player2 ss
+
 allBox[0].classList.add("player2")
 allBox[0].innerHTML = `<div class = "lifeBar2">
 <div></div>
@@ -517,7 +518,7 @@ allControllButtons.forEach(btn => {
                     player2LifeLevel(index-11);
                     translateYValue += 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 11].querySelector(".arrow2").style.transform = `translate(0px, 0px) rotate(-2deg)`
+                    allBox[index - 11].querySelector(".arrow2").style.transform = `translate(-2px, 6px) rotate(-2deg)`
                 }
             } else if(id == "down"){
                 index = parseInt(returnIndex("player2"));
@@ -532,7 +533,7 @@ allControllButtons.forEach(btn => {
                    translateYValue -= 10;
                    //if i just add translateX(translateXValue) then y position will be set as initial position which doesnt make smooth camera movement
                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                   allBox[index + 11].querySelector(".arrow2").style.transform = `translate(0px,47px) rotate(180deg)` //arrow movement on left,right,up,down
+                   allBox[index + 11].querySelector(".arrow2").style.transform = `translate(-1px, 41px) rotate(180deg)` //arrow movement on left,right,up,down
                    }
             } else if(id == "left"){
                  arrowDirectionPlayer2 = "left"
@@ -546,7 +547,7 @@ allControllButtons.forEach(btn => {
                     player2LifeLevel(index-1);
                     translateXValue += 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 1].querySelector(".arrow2").style.transform = `translate(-24px,26px) rotate(268deg)`
+                    allBox[index - 1].querySelector(".arrow2").style.transform = `translate(-20px, 23px) rotate(268deg)`
                 }
             } else if(id == "right"){
                 index = parseInt(returnIndex("player2"));
@@ -560,7 +561,7 @@ allControllButtons.forEach(btn => {
                     player2LifeLevel(index+1);
                     translateXValue -= 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 1].querySelector(".arrow2").style.transform = `translate(23px,24px) rotate(90deg)`
+                    allBox[index + 1].querySelector(".arrow2").style.transform = `translate(16px, 23px) rotate(90deg)`
                 }
             } else if(id == "shootButton"){
             bulletControll2(arrowDirectionPlayer2)
@@ -579,7 +580,7 @@ allControllButtons.forEach(btn => {
                     player1LifeLevel(index-11);
                     translateYValue += 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 11].querySelector(".arrow").style.transform = `translate(0px, 0px) rotate(-2deg)`
+                    allBox[index - 11].querySelector(".arrow").style.transform = `translate(-2px, 6px) rotate(-2deg)`
                 } 
             }
             else if(id == "down"){
@@ -594,7 +595,7 @@ allControllButtons.forEach(btn => {
                     player1LifeLevel(index+11); 
                     translateYValue -= 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 11].querySelector(".arrow").style.transform = `translate(0px,47px) rotate(180deg)` 
+                    allBox[index + 11].querySelector(".arrow").style.transform = `translate(-1px, 41px) rotate(180deg)` 
                 }
             } else if(id == "left"){
                 arrowDirectionPlayer1 = "left"
@@ -608,7 +609,7 @@ allControllButtons.forEach(btn => {
                     player1LifeLevel(index-1);
                     translateXValue += 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 1].querySelector(".arrow").style.transform = `translate(-24px,26px) rotate(268deg)`
+                    allBox[index - 1].querySelector(".arrow").style.transform = `translate(-20px, 23px) rotate(268deg)`
                 }
             } else if(id == "right"){
                 index = parseInt(returnIndex("player1"));
@@ -622,7 +623,7 @@ allControllButtons.forEach(btn => {
                     player1LifeLevel(index+1);
                     translateXValue -= 10;
                     board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 1].querySelector(".arrow").style.transform = `translate(23px,24px) rotate(90deg)`
+                    allBox[index + 1].querySelector(".arrow").style.transform = `translate(16px, 23px) rotate(90deg)`
                 }
             } else if(id == "shootButton"){
                 bulletControll(arrowDirectionPlayer1)
