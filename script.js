@@ -11,14 +11,21 @@ allBox[120].classList.add("player1")
 allBox[120].innerHTML = `<div class = "lifeBar1">
 <div></div>
 </div>
-<div class = "arrow"></div>
+<div class = "arrow">
+</div>
+<span>1<span>
 `
-//allBox[60] is a a player2 
+
+
+
+//allBox[60] is a a player2 ss
 allBox[0].classList.add("player2")
 allBox[0].innerHTML = `<div class = "lifeBar2">
 <div></div>
 </div>
-<div class = "arrow2"></div>`
+<div class = "arrow2">
+</div>
+<span>2</span>`
 
 
 const arrow = document.querySelector(".box.player1 .arrow")
@@ -56,7 +63,7 @@ function player1LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar1">
     <div></div>
     </div>
-    <div class = "arrow"></div>`
+    <div class = "arrow"></div><span>1</span>`
     allBox[index].querySelector(".lifeBar1 div").style.width = `${player1Life}%`;
 }
 
@@ -65,7 +72,7 @@ function player2LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar2">
     <div></div>
     </div>
-    <div class = "arrow2"></div>`
+    <div class = "arrow2"></div><span>2</span>`
     allBox[index].querySelector(".lifeBar2 div").style.width = `${player2Life}%`;
 }
 
@@ -81,7 +88,7 @@ setInterval(()=>{
             player1Life -= 10;
             e.querySelector(".lifeBar1 div").style.width = `${player1Life}%`
             if(player1Life <= 0){
-            outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player dead</h1>`
+            outsideBoard.innerHTML = `<h1 style="color : rgb(194, 135, 99)">Player Green dead and player Brown win</h1>`
             return;
             }
         }
@@ -94,7 +101,7 @@ setInterval(()=>{
             player2Life -= 10;
             e.querySelector(".lifeBar2 div").style.width = `${player2Life}%`
             if(player2Life <= 0){
-            outsideBoard.innerHTML = `<h1 style={{color : "red"}}>Player dead</h1>`
+            outsideBoard.innerHTML = `<h1 style="color : rgb(151, 253, 151)">Player Brown dead and player Green win</h1>`
             return;
             }
         }
@@ -177,6 +184,9 @@ document.addEventListener("keydown",(e)=>{
         if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
             arrowDirectionPlayer1 = "up"
             allBox[index].classList.remove("player1"); 
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index - 11].classList.add("player1");
             player1LifeLevel(index-11);
             translateYValue += 10;
@@ -189,6 +199,9 @@ document.addEventListener("keydown",(e)=>{
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
             arrowDirectionPlayer1 = "down"
             allBox[index].classList.remove("player1");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index + 11].classList.add("player1");
             player1LifeLevel(index+11); //if i dont call fun the player life level will not visible when we navigate to different boxes
             translateYValue -= 10;
@@ -202,6 +215,9 @@ document.addEventListener("keydown",(e)=>{
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
             arrowDirectionPlayer1 = "right"
             allBox[index].classList.remove("player1");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index + 1].classList.add("player1");    
             player1LifeLevel(index+1);
             translateXValue -= 10;
@@ -214,6 +230,9 @@ document.addEventListener("keydown",(e)=>{
         index = parseInt(returnIndex("player1"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
             allBox[index].classList.remove("player1");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index - 1].classList.add("player1");
             player1LifeLevel(index-1);
             translateXValue += 10;
@@ -229,6 +248,9 @@ document.addEventListener("keydown",(e)=>{
         if(index - 11 >= 0){
             arrowDirectionPlayer2 = "up"
             allBox[index].classList.remove("player2");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index - 11].classList.add("player2");
             player2LifeLevel(index-11);
             translateYValue += 10;
@@ -241,6 +263,9 @@ document.addEventListener("keydown",(e)=>{
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
             arrowDirectionPlayer2 = "down"
             allBox[index].classList.remove("player2");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index + 11].classList.add("player2");
             player2LifeLevel(index+11); //if i dont call fun the player life level will not visible when we navigate to different boxes
             translateYValue -= 10;
@@ -254,6 +279,9 @@ document.addEventListener("keydown",(e)=>{
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
             arrowDirectionPlayer2 = "right"
             allBox[index].classList.remove("player2");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index + 1].classList.add("player2");    
             player2LifeLevel(index+1);
             translateXValue -= 10;
@@ -266,6 +294,9 @@ document.addEventListener("keydown",(e)=>{
         index = parseInt(returnIndex("player2"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
             allBox[index].classList.remove("player2");
+            while(allBox[index].hasChildNodes()){
+                allBox[index].removeChild(allBox[index].firstChild)
+            }
             allBox[index - 1].classList.add("player2");
             player2LifeLevel(index-1);
             translateXValue += 10;
