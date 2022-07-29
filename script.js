@@ -17,7 +17,6 @@ allBox[120].innerHTML = `<div class = "lifeBar1">
 </div>
 <div class = "arrow">
 </div>
-<span>1<span>
 `
 
 
@@ -29,9 +28,7 @@ allBox[0].innerHTML = `<div class = "lifeBar2">
 <div></div>
 </div>
 <div class = "arrow2">
-</div>
-<span>2</span>`
-
+</div>`
 
 const arrow = document.querySelector(".box.player1 .arrow")
 const lifeBar1 = document.querySelector(".box.player1 .lifeBar1 div")
@@ -68,7 +65,7 @@ function player1LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar1">
     <div></div>
     </div>
-    <div class = "arrow"></div><span>1</span>`
+    <div class = "arrow"></div>`
     allBox[index].querySelector(".lifeBar1 div").style.width = `${player1Life}%`;
 }
 
@@ -77,7 +74,7 @@ function player2LifeLevel(index){
     allBox[index].innerHTML = `<div class = "lifeBar2">
     <div></div>
     </div>
-    <div class = "arrow2"></div><span>2</span>`
+    <div class = "arrow2"></div>`
     allBox[index].querySelector(".lifeBar2 div").style.width = `${player2Life}%`;
 }
 
