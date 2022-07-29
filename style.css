@@ -10,7 +10,7 @@ body{
     justify-content: center;
     align-items: center;
 }
-body > div{
+body > div:nth-child(1){
     width:70vw;
     height: 70vh;
     box-shadow: 0px 0px 1px 1px grey;
@@ -19,7 +19,7 @@ body > div{
     align-items: center;
     overflow: hidden;
 }
-body > div > div{
+body > div:nth-child(1) > div{
     width:fit-content;  
    
     box-shadow: 0px 0px 1px 1px grey;
@@ -38,12 +38,24 @@ body > div > div{
     box-shadow: 0px 0px 1px 1px grey;
     border-radius: 50%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000a6;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 .box.player2 {
     background-color: rgb(194, 135, 99);
     box-shadow: 0px 0px 1px 1px grey;
     border-radius: 50%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #000000a6;
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
 .box.player1 .lifeBar1{
@@ -110,4 +122,66 @@ body > div > div{
 }
 .box.mituor{
     background-color: rgb(255, 164, 164);
+}
+@media screen and (max-width:500px){
+    .box{
+        width:22px;
+        height: 22px;
+    }
+    body > div:nth-child(1){
+        width:96vw;
+        height: 42vh;
+    }
+    body > div.player1Controll,
+    body>div.player2Controll
+    {
+        position: absolute;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+    }
+    body>div.player1Controll p,
+    body>div.player2Controll p{
+        grid-row: 1/2;
+        grid-column: 1/4;
+        text-align: center;
+    }
+    body>div.player1Controll .controll,
+    body>div.player2Controll .controll {
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    body>div.player1Controll > button,
+    body>div.player2Controll > button {
+        height: min-content;
+        grid-row: 2/3;
+        grid-column: 3/4;
+       
+
+    }
+    body > div.player2Controll {
+        top : 10px;
+    }
+    body > div.player1Controll{
+        bottom: 10px;
+    }
+   .controll{
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);  
+    }
+    .controll button[data-id = "up"]{
+        grid-row: 1/2;
+        grid-column:2/3;
+    }
+    .controll button[data-id="left"] {
+        grid-row: 2/3;
+        grid-column: 1/2;
+    }
+    .controll button[data-id="right"] {
+        grid-row: 2/3;
+        grid-column: 3/4;
+    }
+    .controll button[data-id="down"] {
+        grid-row: 3/4;
+        grid-column: 2/3;   
+    }
 }
