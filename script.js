@@ -19,8 +19,6 @@ allBox[120].innerHTML = `<div class = "lifeBar1">
 </div>
 `
 
-
-
 //allBox[60] is a a player2 ss
 
 allBox[0].classList.add("player2")
@@ -180,68 +178,45 @@ let arrowDirectionPlayer1 = "up"; //help in shooting a bullet in certain directi
 //if i set arrowDirectionPlayer1 to "" initially than if i shoot before moving my player 
 //bulletControll(arrowDirectionPlayer1) with arrowDirectionPlayer1 = "" will execute but it will not shoot bullet becuase arrowDirectionPlayer1 is ""
 let arrowDirectionPlayer2 = ""
+function movement(direction, index, position, arrowDirectionValue,changeBoadTranslateValue,playerClass,playerLifeLevel,arrowClass, assignDirection){
+    assignDirection(direction)
+    allBox[index].classList.remove(playerClass); 
+    while(allBox[index].hasChildNodes()){
+        allBox[index].removeChild(allBox[index].firstChild)
+    }
+    allBox[position].classList.add(playerClass);
+    playerLifeLevel(position);//if i dont call player1LifeLevel function the player life level will not visible when we navigate to different boxes
+    changeBoadTranslateValue();
+    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
+    //if i just add translateX(translateXValue) then y position will be set as initial position which doesnt make smooth camera movement
+    allBox[position].querySelector(arrowClass).style.transform = arrowDirectionValue
+    //arrow movement on left,right,up,down
+}
 document.addEventListener("keydown",(e)=>{
     let index;
     switch(e.key){
         case "ArrowUp":
             index = parseInt(returnIndex("player1")); //returns position of player1
-        if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
-            arrowDirectionPlayer1 = "up"
-            allBox[index].classList.remove("player1"); 
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
+            if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
+                movement("up",index, index - 11,`translate(0px, 0px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
             }
-            allBox[index - 11].classList.add("player1");
-            player1LifeLevel(index-11);
-            translateYValue += 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-             allBox[index - 11].querySelector(".arrow").style.transform = `translate(0px, 0px) rotate(-2deg)`
-        }
         break;
         case "ArrowDown":
         index = parseInt(returnIndex("player1"));
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
-            arrowDirectionPlayer1 = "down"
-            allBox[index].classList.remove("player1");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index + 11].classList.add("player1");
-            player1LifeLevel(index+11); //if i dont call fun the player life level will not visible when we navigate to different boxes
-            translateYValue -= 10;
-            //if i just add translateX(translateXValue) then y position will be set as initial position which doesnt make smooth camera movement
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-            allBox[index + 11].querySelector(".arrow").style.transform = `translate(0px,47px) rotate(180deg)` //arrow movement on left,right,up,down
+            movement("down", index, index + 11, `translate(0px,47px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
             }
         break;
         case "ArrowRight":
         index = parseInt(returnIndex("player1"));
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
-            arrowDirectionPlayer1 = "right"
-            allBox[index].classList.remove("player1");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index + 1].classList.add("player1");    
-            player1LifeLevel(index+1);
-            translateXValue -= 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-            allBox[index + 1].querySelector(".arrow").style.transform = `translate(23px,24px) rotate(90deg)`
+            movement("right", index, index + 1,`translate(23px,24px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
         }
         break;
         case "ArrowLeft":
-        arrowDirectionPlayer1 = "left"
-        index = parseInt(returnIndex("player1"));
+            index = parseInt(returnIndex("player1"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
-            allBox[index].classList.remove("player1");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index - 1].classList.add("player1");
-            player1LifeLevel(index-1);
-            translateXValue += 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-             allBox[index - 1].querySelector(".arrow").style.transform = `translate(-24px,26px) rotate(268deg)`
+            movement("left",index, index - 1,`translate(-24px,26px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
         }
         break;
         case "0":
@@ -249,63 +224,26 @@ document.addEventListener("keydown",(e)=>{
             break;
         case "w":
         index = parseInt(returnIndex("player2"));
-        if(index - 11 >= 0){
-            arrowDirectionPlayer2 = "up"
-            allBox[index].classList.remove("player2");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index - 11].classList.add("player2");
-            player2LifeLevel(index-11);
-            translateYValue += 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-             allBox[index - 11].querySelector(".arrow2").style.transform = `translate(0px, 0px) rotate(-2deg)`
+        if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
+            movement("up",index, index - 11, `translate(0px, 0px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case "s":
         index = parseInt(returnIndex("player2"));
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
-            arrowDirectionPlayer2 = "down"
-            allBox[index].classList.remove("player2");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index + 11].classList.add("player2");
-            player2LifeLevel(index+11); //if i dont call fun the player life level will not visible when we navigate to different boxes
-            translateYValue -= 10;
-            //if i just add translateX(translateXValue) then y position will be set as initial position which doesnt make smooth camera movement
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-            allBox[index + 11].querySelector(".arrow2").style.transform = `translate(0px,47px) rotate(180deg)` //arrow movement on left,right,up,down
+             movement("down",index, index + 11, `translate(0px,47px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
             }
         break;
         case "d":
         index = parseInt(returnIndex("player2"));
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
-            arrowDirectionPlayer2 = "right"
-            allBox[index].classList.remove("player2");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index + 1].classList.add("player2");    
-            player2LifeLevel(index+1);
-            translateXValue -= 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-            allBox[index + 1].querySelector(".arrow2").style.transform = `translate(23px,24px) rotate(90deg)`
+            movement("right",index, index + 1, `translate(23px,24px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case "a":
-        arrowDirectionPlayer2 = "left"
         index = parseInt(returnIndex("player2"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
-            allBox[index].classList.remove("player2");
-            while(allBox[index].hasChildNodes()){
-                allBox[index].removeChild(allBox[index].firstChild)
-            }
-            allBox[index - 1].classList.add("player2");
-            player2LifeLevel(index-1);
-            translateXValue += 10;
-            board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-             allBox[index - 1].querySelector(".arrow2").style.transform = `translate(-24px,26px) rotate(268deg)`
+            movement("left",index, index - 1, `translate(-24px,26px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case " ":
@@ -505,60 +443,24 @@ allControllButtons.forEach(btn => {
         if(player == "two"){
             if(id == "up"){
                 index = parseInt(returnIndex("player2"));
-                if(index - 11 >= 0){
-                    arrowDirectionPlayer2 = "up"
-                    allBox[index].classList.remove("player2");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index - 11].classList.add("player2");
-                    player2LifeLevel(index-11);
-                    translateYValue += 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 11].querySelector(".arrow2").style.transform = `translate(-2px, 6px) rotate(-2deg)`
+                if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
+                     movement("up",index, index - 11, `translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
                 }
             } else if(id == "down"){
                 index = parseInt(returnIndex("player2"));
                if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
-                   arrowDirectionPlayer2 = "down"
-                   allBox[index].classList.remove("player2");
-                   while(allBox[index].hasChildNodes()){
-                       allBox[index].removeChild(allBox[index].firstChild)
-                   }
-                   allBox[index + 11].classList.add("player2");
-                   player2LifeLevel(index+11); //if i dont call fun the player life level will not visible when we navigate to different boxes
-                   translateYValue -= 10;
-                   //if i just add translateX(translateXValue) then y position will be set as initial position which doesnt make smooth camera movement
-                   board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                   allBox[index + 11].querySelector(".arrow2").style.transform = `translate(-1px, 41px) rotate(180deg)` //arrow movement on left,right,up,down
-                   }
+                movement("down",index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                }
             } else if(id == "left"){
                  arrowDirectionPlayer2 = "left"
                 index = parseInt(returnIndex("player2"));
                 if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
-                    allBox[index].classList.remove("player2");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index - 1].classList.add("player2");
-                    player2LifeLevel(index-1);
-                    translateXValue += 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 1].querySelector(".arrow2").style.transform = `translate(-20px, 23px) rotate(268deg)`
+                     movement("left",index, index - 1, `translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
                 }
             } else if(id == "right"){
                 index = parseInt(returnIndex("player2"));
                 if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
-                    arrowDirectionPlayer2 = "right"
-                    allBox[index].classList.remove("player2");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index + 1].classList.add("player2");    
-                    player2LifeLevel(index+1);
-                    translateXValue -= 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 1].querySelector(".arrow2").style.transform = `translate(16px, 23px) rotate(90deg)`
+                    movement("right",index, index + 1, `translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
                 }
             } else if(id == "shootButton"){
             bulletControll2(arrowDirectionPlayer2)
@@ -568,59 +470,24 @@ allControllButtons.forEach(btn => {
             if(id == "up"){
                 index = parseInt(returnIndex("player1")); //returns position of player1
                 if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
-                    arrowDirectionPlayer1 = "up"
-                    allBox[index].classList.remove("player1"); 
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index - 11].classList.add("player1");
-                    player1LifeLevel(index-11);
-                    translateYValue += 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 11].querySelector(".arrow").style.transform = `translate(-2px, 6px) rotate(-2deg)`
+                      movement("up",index, index - 11,`translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
                 } 
             }
             else if(id == "down"){
                 index = parseInt(returnIndex("player1"));
                 if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
-                    arrowDirectionPlayer1 = "down"
-                    allBox[index].classList.remove("player1");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index + 11].classList.add("player1");
-                    player1LifeLevel(index+11); 
-                    translateYValue -= 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 11].querySelector(".arrow").style.transform = `translate(-1px, 41px) rotate(180deg)` 
+                    movement("down", index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
                 }
             } else if(id == "left"){
                 arrowDirectionPlayer1 = "left"
                 index = parseInt(returnIndex("player1"));
                 if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
-                    allBox[index].classList.remove("player1");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index - 1].classList.add("player1");
-                    player1LifeLevel(index-1);
-                    translateXValue += 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index - 1].querySelector(".arrow").style.transform = `translate(-20px, 23px) rotate(268deg)`
+                     movement("left",index, index - 1,`translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
                 }
             } else if(id == "right"){
                 index = parseInt(returnIndex("player1"));
                 if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
-                    arrowDirectionPlayer1 = "right"
-                    allBox[index].classList.remove("player1");
-                    while(allBox[index].hasChildNodes()){
-                        allBox[index].removeChild(allBox[index].firstChild)
-                    }
-                    allBox[index + 1].classList.add("player1");    
-                    player1LifeLevel(index+1);
-                    translateXValue -= 10;
-                    board.style.transform = `translate(${translateXValue}px,${translateYValue}px)`
-                    allBox[index + 1].querySelector(".arrow").style.transform = `translate(16px, 23px) rotate(90deg)`
+                    movement("right", index, index + 1,`translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
                 }
             } else if(id == "shootButton"){
                 bulletControll(arrowDirectionPlayer1)
