@@ -198,25 +198,39 @@ document.addEventListener("keydown",(e)=>{
         case "ArrowUp":
             index = parseInt(returnIndex("player1")); //returns position of player1
             if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
-                movement("up",index, index - 11,`translate(0px, 0px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                movement("up",
+                index, 
+                index - 11,
+                `translate(0px, 0px) rotate(-2deg)`
+                ,()=>translateYValue += ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30), 
+                "player1", 
+                player1LifeLevel,
+                ".arrow",
+                (dir)=>arrowDirectionPlayer1 = dir)
             }
         break;
         case "ArrowDown":
         index = parseInt(returnIndex("player1"));
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
-            movement("down", index, index + 11, `translate(0px,47px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
+            movement("down", index, index + 11, `translate(0px,47px) rotate(180deg)`,
+            ()=>translateYValue -= ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30), 
+            "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
             }
         break;
         case "ArrowRight":
         index = parseInt(returnIndex("player1"));
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
-            movement("right", index, index + 1,`translate(23px,24px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+            movement("right", index, index + 1,`translate(23px,24px) rotate(90deg)`,
+            ()=>translateXValue -= ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+             "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
         }
         break;
         case "ArrowLeft":
             index = parseInt(returnIndex("player1"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
-            movement("left",index, index - 1,`translate(-24px,26px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+            movement("left",index, index - 1,`translate(-24px,26px) rotate(268deg)`,
+            ()=>translateXValue += ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+             "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
         }
         break;
         case "0":
@@ -225,25 +239,34 @@ document.addEventListener("keydown",(e)=>{
         case "w":
         index = parseInt(returnIndex("player2"));
         if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
-            movement("up",index, index - 11, `translate(0px, 0px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+            movement("up",index, index - 11, `translate(0px, 0px) rotate(-2deg)`,
+            ()=>translateYValue += ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+            "player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case "s":
         index = parseInt(returnIndex("player2"));
         if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
-             movement("down",index, index + 11, `translate(0px,47px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+             movement("down",index, index + 11, `translate(0px,47px) rotate(180deg)`,
+             ()=>translateYValue -= ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+             "player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
             }
         break;
         case "d":
         index = parseInt(returnIndex("player2"));
         if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
-            movement("right",index, index + 1, `translate(23px,24px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+            movement("right",index, index + 1, `translate(23px,24px) rotate(90deg)`,
+            ()=>translateXValue -= ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+            "player2",
+            player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case "a":
         index = parseInt(returnIndex("player2"));
         if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
-            movement("left",index, index - 1, `translate(-24px,26px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+            movement("left",index, index - 1, `translate(-24px,26px) rotate(268deg)`,
+            ()=>translateXValue += ((window.matchMedia("(max-width:500px)").matches) ? 10 : 30),
+            "player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
         }
         break;
         case " ":
