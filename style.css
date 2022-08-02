@@ -3,6 +3,18 @@
     padding:0;
     box-sizing: border-box;
 }
+.img1{
+    position: absolute;
+    width: 330px;
+    z-index: -1;
+}
+.img2{
+    position: absolute; 
+    width: 330px;
+    bottom: 0;
+    z-index: -1;
+    
+}
 body{
     width:100vw;
     height:100vh;
@@ -20,8 +32,9 @@ body > div:nth-child(1){
     overflow: hidden;
 }
 body > div:nth-child(1) > div{
+    transition: ease 0.4s;
     width:fit-content;  
-   
+   position: relative;
     box-shadow: 0px 0px 1px 1px grey;
     display: grid;
     grid-template-columns: repeat(11,1fr);
@@ -114,20 +127,27 @@ body > div:nth-child(1) > div{
 .box.box.bullet2{
     background-color: rgb(97, 253, 253);
     width: 40%;
-    height: 40%;
+    height: 40%;    
     border-radius: 50%;
     box-shadow: 0px 0px 1px 1px grey;
     justify-self: center;
     align-self: center;
 }
 .box.mituor{
-    background-color: rgb(255, 164, 164);
+    background-color: rgb(217, 40, 40);
 }
 body>div.player1Controll,
 body>div.player2Controll{
     display: none;
 }
 @media screen and (max-width:500px){
+    .img2{
+            width: 241px;
+            bottom: -2px;
+    }
+    .img1{
+        width: 241px;
+    }
     .box.player2 .arrow2{
             width: 0;
             height: 0;
