@@ -228,9 +228,24 @@ body>div.player2Controll{
       display: grid;
       grid-template-columns: repeat(3, 1fr);  
     }
+    .playerControll button{
+        background-color: rgb(255, 238, 154);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-weight: 500;
+        border: none;
+    }
+    .playerControll button:active{
+        background-color:rgb(248, 205, 76);
+    }
     .controll button{
         margin: 3px;  
         padding: 5px; 
+        background-color: rgb(212, 211, 230);
+    }
+    .controll button:active{
+        background-color: rgb(168, 164, 255);
     }
     .controll button[data-id = "up"]{
         grid-row: 1/2;
