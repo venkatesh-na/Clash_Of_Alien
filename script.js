@@ -462,16 +462,16 @@ let player = document.querySelector(".box.player2")
 let intervalForLongpress;
 allControllButtons.forEach(btn => {
     btn.addEventListener("click",handleSingleClick)
-    //btn.addEventListener("touchstart",handleMobileControll)
-   // btn.addEventListener("touchend",()=>{
-     //   console.log("end")
-     //  clearInterval(intervalForLongpress);
- //})
-    //when i double click on button it acts weared so i added if we double click on button do nothing but double click does not work on movbile
-    // btn.addEventListener("dblclick",()=>{
-    //     console.log("dbl")
-    //     isDoubleClick = true
-    // })
+    btn.addEventListener("touchstart",handleMobileControll)
+    btn.addEventListener("touchend",()=>{
+     console.log("end")
+       clearInterval(intervalForLongpress);
+ })
+    when i double click on button it acts weared so i added if we double click on button do nothing but double click does not work on movbile
+     btn.addEventListener("dblclick",()=>{
+         console.log("dbl")
+    isDoubleClick = true
+     })
 })
 
 
