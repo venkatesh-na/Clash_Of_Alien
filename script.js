@@ -467,7 +467,7 @@ allControllButtons.forEach(btn => {
      console.log("end")
        clearInterval(intervalForLongpress);
  })
-    when i double click on button it acts weared so i added if we double click on button do nothing but double click does not work on movbile
+    //when i double click on button it acts weared so i added if we double click on button do nothing but double click does not work on movbile
      btn.addEventListener("dblclick",()=>{
          console.log("dbl")
     isDoubleClick = true
