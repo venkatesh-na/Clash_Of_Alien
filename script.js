@@ -459,62 +459,138 @@ let player = document.querySelector(".box.player2")
 }
 
 
+let intervalForLongpress;
 allControllButtons.forEach(btn => {
-    btn.addEventListener("click",(event)=>{
-        let id = event.target.dataset.id
-        let player = event.target.dataset.player
-        if(player == "two"){
-            if(id == "up"){
-                index = parseInt(returnIndex("player2"));
-                if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
-                     movement("up",index, index - 11, `translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
-                }
-            } else if(id == "down"){
-                index = parseInt(returnIndex("player2"));
-               if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
-                movement("down",index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
-                }
-            } else if(id == "left"){
-                 arrowDirectionPlayer2 = "left"
-                index = parseInt(returnIndex("player2"));
-                if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
-                     movement("left",index, index - 1, `translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
-                }
-            } else if(id == "right"){
-                index = parseInt(returnIndex("player2"));
-                if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
-                    movement("right",index, index + 1, `translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
-                }
-            } else if(id == "shootButton"){
-            bulletControll2(arrowDirectionPlayer2)
-            }
-        }
-        if(player == "one"){
-            if(id == "up"){
-                index = parseInt(returnIndex("player1")); //returns position of player1
-                if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
-                      movement("up",index, index - 11,`translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
-                } 
-            }
-            else if(id == "down"){
-                index = parseInt(returnIndex("player1"));
-                if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
-                    movement("down", index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
-                }
-            } else if(id == "left"){
-                arrowDirectionPlayer1 = "left"
-                index = parseInt(returnIndex("player1"));
-                if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
-                     movement("left",index, index - 1,`translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
-                }
-            } else if(id == "right"){
-                index = parseInt(returnIndex("player1"));
-                if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
-                    movement("right", index, index + 1,`translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
-                }
-            } else if(id == "shootButton"){
-                bulletControll(arrowDirectionPlayer1)
-            }
-        }
+    btn.addEventListener("click",handleSingleClick)
+    btn.addEventListener("touchstart",handleMobileControll)
+    btn.addEventListener("touchend",()=>{
+        console.log("end")
+       clearInterval(intervalForLongpress);
     })
+    //when i double click on button it acts weared so i added if we double click on button do nothing but double click does not work on movbile
+    // btn.addEventListener("dblclick",()=>{
+    //     console.log("dbl")
+    //     isDoubleClick = true
+    // })
 })
+
+
+function handleSingleClick(event){
+      let id = event.target.dataset.id
+            let player = event.target.dataset.player
+            if(player == "two"){
+                if(id == "up"){
+                    index = parseInt(returnIndex("player2"));
+                    if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
+                        movement("up",index, index - 11, `translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "down"){
+                    index = parseInt(returnIndex("player2"));
+                if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
+                    movement("down",index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "left"){
+                    arrowDirectionPlayer2 = "left"
+                    index = parseInt(returnIndex("player2"));
+                    if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
+                        movement("left",index, index - 1, `translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "right"){
+                    index = parseInt(returnIndex("player2"));
+                    if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
+                        movement("right",index, index + 1, `translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "shootButton"){
+                bulletControll2(arrowDirectionPlayer2)
+                }
+            }
+            if(player == "one"){
+                if(id == "up"){
+                    index = parseInt(returnIndex("player1")); //returns position of player1
+                    if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
+                        movement("up",index, index - 11,`translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    } 
+                }
+                else if(id == "down"){
+                    index = parseInt(returnIndex("player1"));
+                    if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
+                        movement("down", index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
+                    }
+                } else if(id == "left"){
+                    arrowDirectionPlayer1 = "left"
+                    index = parseInt(returnIndex("player1"));
+                    if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
+                        movement("left",index, index - 1,`translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    }
+                } else if(id == "right"){
+                    index = parseInt(returnIndex("player1"));
+                    if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
+                        movement("right", index, index + 1,`translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    }
+                } else if(id == "shootButton"){
+                    bulletControll(arrowDirectionPlayer1)
+                }
+            }
+}
+
+
+function handleMobileControll(event){
+        intervalForLongpress = setInterval(()=>{       
+            let id = event.target.dataset.id
+            let player = event.target.dataset.player
+            if(player == "two"){
+                if(id == "up"){
+                    index = parseInt(returnIndex("player2"));
+                    if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player1")){
+                        movement("up",index, index - 11, `translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "down"){
+                    index = parseInt(returnIndex("player2"));
+                if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player1")){
+                    movement("down",index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "left"){
+                    arrowDirectionPlayer2 = "left"
+                    index = parseInt(returnIndex("player2"));
+                    if(index % 11 != 0 && !allBox[index - 1].classList.contains("player1")){
+                        movement("left",index, index - 1, `translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "right"){
+                    index = parseInt(returnIndex("player2"));
+                    if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player1")){
+                        movement("right",index, index + 1, `translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10,"player2",player2LifeLevel,".arrow2",(dir)=>arrowDirectionPlayer2 = dir)
+                    }
+                } else if(id == "shootButton"){
+                bulletControll2(arrowDirectionPlayer2)
+                }
+            }
+            if(player == "one"){
+                if(id == "up"){
+                    index = parseInt(returnIndex("player1")); //returns position of player1
+                    if(index - 11 >= 0 && !allBox[index - 11].classList.contains("player2")){
+                        movement("up",index, index - 11,`translate(-2px, 6px) rotate(-2deg)`,()=>translateYValue += 10, "player1", player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    } 
+                }
+                else if(id == "down"){
+                    index = parseInt(returnIndex("player1"));
+                    if(index + 11 <= 120 && !allBox[index + 11].classList.contains("player2")){
+                        movement("down", index, index + 11, `translate(-1px, 41px) rotate(180deg)`,()=>translateYValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir);
+                    }
+                } else if(id == "left"){
+                    arrowDirectionPlayer1 = "left"
+                    index = parseInt(returnIndex("player1"));
+                    if(index % 11 != 0 && !allBox[index - 1].classList.contains("player2")){
+                        movement("left",index, index - 1,`translate(-20px, 23px) rotate(268deg)`,()=>translateXValue += 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    }
+                } else if(id == "right"){
+                    index = parseInt(returnIndex("player1"));
+                    if((index + 1) % 11 != 0 && !allBox[index + 1].classList.contains("player2")){
+                        movement("right", index, index + 1,`translate(16px, 23px) rotate(90deg)`,()=>translateXValue -= 10, "player1",player1LifeLevel,".arrow",(dir)=>arrowDirectionPlayer1 = dir)
+                    }
+                } else if(id == "shootButton"){
+                    bulletControll(arrowDirectionPlayer1)
+                }
+            }
+    },200)//interval
+
+}
