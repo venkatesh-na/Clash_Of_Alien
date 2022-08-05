@@ -591,6 +591,6 @@ function handleMobileControll(event){
                     bulletControll(arrowDirectionPlayer1)
                 }
             }
-    },500)//interval
+    },300)//interval
 
 }
