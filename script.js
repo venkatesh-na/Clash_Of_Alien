@@ -299,7 +299,7 @@ function bulletControll(direction){
                 }
                 allBox[playerId].classList.add("bullet")
                 checkPlayer2BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "down":
             player = document.querySelector(".box.player1")
@@ -319,7 +319,7 @@ function bulletControll(direction){
                 }
                 allBox[playerId].classList.add("bullet")
                 checkPlayer2BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "left":
             player = document.querySelector(".box.player1")
@@ -340,7 +340,7 @@ function bulletControll(direction){
                 playerId -= 1;
                 allBox[playerId].classList.add("bullet")
                 checkPlayer2BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "right":
             player = document.querySelector(".box.player1")
@@ -361,7 +361,7 @@ function bulletControll(direction){
                 playerId += 1;
                 allBox[playerId].classList.add("bullet")
                 checkPlayer2BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
     }
 }
@@ -391,7 +391,7 @@ let player = document.querySelector(".box.player2")
                 }
                 allBox[playerId].classList.add("bullet2")
                 checkPlayer1BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "down":
             player = document.querySelector(".box.player2")
@@ -411,7 +411,7 @@ let player = document.querySelector(".box.player2")
                 }
                 allBox[playerId].classList.add("bullet2")
                 checkPlayer1BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "left":
             player = document.querySelector(".box.player2")
@@ -432,7 +432,7 @@ let player = document.querySelector(".box.player2")
                 playerId -= 1;
                 allBox[playerId].classList.add("bullet2")
                 checkPlayer1BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
         case "right":
             player = document.querySelector(".box.player2")
@@ -453,7 +453,7 @@ let player = document.querySelector(".box.player2")
                 playerId += 1;
                 allBox[playerId].classList.add("bullet2")
                 checkPlayer1BulletCollision(playerId, interval)
-            },300)
+            },50)
             break;
     }
 }
@@ -591,6 +591,6 @@ function handleMobileControll(event){
                     bulletControll(arrowDirectionPlayer1)
                 }
             }
-    },300)//interval
+    },50)//interval
 
 }
